@@ -7,7 +7,6 @@ package com.example.android.pets.database;
 
 public class Pet {
 
-
     private long id;
     private String name;
     private String breed;

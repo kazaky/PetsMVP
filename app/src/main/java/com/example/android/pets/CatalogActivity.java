@@ -33,8 +33,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.android.pets.MVP.presnter.PetsPresenterMVP;
-import com.example.android.pets.MVP.view.PetsViewMVP;
+import com.example.android.pets.MVP.presnter.PetsPresenter;
+import com.example.android.pets.MVP.view.PetsView;
 import com.example.android.pets.database.Pet;
 import com.example.android.pets.database.legacy_database.PetContract.PetEntry;
 
@@ -44,7 +44,7 @@ import java.util.List;
  * Displays list of pets that were entered and stored in the app.
  */
 public class CatalogActivity extends AppCompatActivity
-        implements PetsViewMVP,
+        implements PetsView,
         LoaderManager.LoaderCallbacks<Cursor> {
 
     /**
@@ -56,14 +56,14 @@ public class CatalogActivity extends AppCompatActivity
      * Adapter for the ListView
      */
     PetCursorAdapter mCursorAdapter;
-    private PetsPresenterMVP presenter;
+    private PetsPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catalog);
 
-        presenter = new PetsPresenterMVP(this, null);
+        presenter = new PetsPresenter(this, null);
 
         // Setup FAB to open EditorActivity
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -195,6 +195,11 @@ public class CatalogActivity extends AppCompatActivity
 
     @Override
     public void displayPets(List<Pet> petList) {
+
+    }
+
+    @Override
+    public void displayNoPets() {
 
     }
 }
