@@ -1,5 +1,5 @@
-<manifest package="io.marsala.pets"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="io.marsala.pets">
 
     <application
         android:name="io.marsala.pets.PetsApplication"
@@ -12,23 +12,19 @@
             android:name="io.marsala.pets.CatalogActivity"
             android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="io.marsala.pets.EditorActivity"
-            android:theme="@style/EditorTheme"
-            android:parentActivityName="io.marsala.pets.CatalogActivity" >
+            android:parentActivityName="io.marsala.pets.CatalogActivity"
+            android:theme="@style/EditorTheme">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="io.marsala.pets.CatalogActivity" />
         </activity>
-        <provider
-            android:name="io.marsala.pets.MVP.model.legacy_database.PetProvider"
-            android:authorities="io.marsala.pets"
-            android:exported="false" />
     </application>
 
 </manifest>

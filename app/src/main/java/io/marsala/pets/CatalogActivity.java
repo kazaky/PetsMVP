@@ -57,7 +57,6 @@ public class CatalogActivity extends AppCompatActivity
         realm = Realm.getDefaultInstance();
 
         presenter = new PetsPresenter(this, new PetsRepositoryDatabase(realm));
-        presenter.loadPets();
 
         // Setup FAB to open EditorActivity
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -73,9 +72,14 @@ public class CatalogActivity extends AppCompatActivity
         petListView = (RecyclerView) findViewById(R.id.list);
         emptyView = findViewById(R.id.empty_view);
 
-
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.loadPets();
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

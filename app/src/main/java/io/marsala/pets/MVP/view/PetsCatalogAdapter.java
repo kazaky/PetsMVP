@@ -4,18 +4,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import io.marsala.pets.CatalogActivity;
 import io.marsala.pets.EditorActivity;
 import io.marsala.pets.MVP.model.models.Pet;
 import io.marsala.pets.R;
+
+import static io.marsala.pets.MVP.model.models.Constants.PET_ID;
 
 /**
  * Created by AHMED HAMDI ELSHAHAWI on 6/25/2017.
@@ -36,7 +37,6 @@ public class PetsCatalogAdapter extends RecyclerView.Adapter<PetsCatalogAdapter.
     public class PetViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView name;
         TextView summary;
-        private String PET_ID = "pet_id";
 
         public PetViewHolder(View v) {
             super(v);
@@ -51,7 +51,7 @@ public class PetsCatalogAdapter extends RecyclerView.Adapter<PetsCatalogAdapter.
             Intent intent = new Intent(context, EditorActivity.class);
 
             Long id = petsList.get(getAdapterPosition()).getId();
-
+            Log.e(TAG, "onClick: " + id);
             // Set the URI on the data field of the intent
             intent.putExtra(PET_ID, id);
 
@@ -85,7 +85,6 @@ public class PetsCatalogAdapter extends RecyclerView.Adapter<PetsCatalogAdapter.
         holder.name.setText(petName);
         holder.summary.setText(petBreed);
     }
-
 
     @Override
     public int getItemCount() {

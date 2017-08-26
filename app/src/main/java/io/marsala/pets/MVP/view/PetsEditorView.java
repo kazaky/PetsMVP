@@ -11,9 +11,12 @@ import io.marsala.pets.MVP.model.models.Pet;
 
 public interface PetsEditorView {
 
+    void displayEmptyFields();
+
     /**
      * method called by the presenter on the view
+     * @param petsList
      */
-    void displayExistentPet(List<Pet> petsList);
+    void displayExistentPet(Pet petsList);
 
 }

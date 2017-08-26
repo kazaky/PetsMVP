@@ -15,12 +15,14 @@ public interface PetsRepository {
 
     List<Pet> getPets(String searchKeyword, long id);
 
-    void addOrUpdatePet(@Nullable long id,
-                        String name,
-                        String breed,
-                        String gender,
-                        String weight
+    boolean addOrUpdatePet(@Nullable long id,
+                           String name,
+                           String breed,
+                           String gender,
+                           String weight
     );
 
     void deleteAll();
+
+    boolean deleteOnePet(long id);
 }

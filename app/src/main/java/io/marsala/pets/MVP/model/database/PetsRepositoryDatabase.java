@@ -11,7 +11,6 @@ import io.marsala.pets.MVP.model.models.Pet;
 import io.marsala.pets.MVP.model.repositories.PetsRepository;
 import io.realm.Realm;
 import io.realm.RealmResults;
-import io.realm.exceptions.RealmException;
 
 import static io.marsala.pets.MVP.model.models.Constants.PET_ID;
 import static io.marsala.pets.MVP.model.models.Constants.PET_NAME;
@@ -36,35 +35,28 @@ public class PetsRepositoryDatabase implements PetsRepository {
      */
     @Override
     public List<Pet> getPets(String searchKeyword, long id) {
-        List<Pet> results = null;
+        List<Pet> results = Collections.emptyList();
 
-        try {
-            // Get all pets
-            if (searchKeyword == null && id == -1) {
-                results = realm.where(Pet.class).findAll();
-            }
-
-            // Return matched keyword pets only
-            else if (searchKeyword != null && id == -1) {
-                RealmResults<Pet> resultsInNames = realm.where(Pet.class)
-                        .contains(PET_NAME, searchKeyword)
-                        .findAll();
-                results.addAll(resultsInNames);
-            }
-
-            // Return a list of one specific pet by his id
-            else if (id != -1) {
-                Pet existentPet = realm.where(Pet.class)
-                        .equalTo(PET_ID, id).findFirst();
-                results = Arrays.asList(existentPet);
-            }
+        // Get all pets
+        if (searchKeyword == null && id == -1) {
+            results = realm.where(Pet.class).findAll();
         }
 
-        // If error happened, Return an empty list
-        catch (RealmException e) {
-            e.printStackTrace();
-            results = Collections.emptyList();
+        // Return matched keyword pets only
+        else if (searchKeyword != null && id == -1) {
+            RealmResults<Pet> resultsInNames = realm.where(Pet.class)
+                    .contains(PET_NAME, searchKeyword)
+                    .findAll();
+            results.addAll(resultsInNames);
         }
+
+        // Return a list of one specific pet by his id
+        else {
+            Pet existentPet = realm.where(Pet.class)
+                    .equalTo(PET_ID, id).findFirst();
+            results = Arrays.asList(existentPet);
+        }
+
 
         return results;
     }
@@ -78,15 +70,16 @@ public class PetsRepositoryDatabase implements PetsRepository {
      * @param weight
      */
     @Override
-    public void addOrUpdatePet(@Nullable final long id,
-                               final String name,
-                               final String breed,
-                               final String gender,
-                               final String weight) {
+    public boolean addOrUpdatePet(@Nullable final long id,
+                                  final String name,
+                                  final String breed,
+                                  final String gender,
+                                  final String weight) {
+        // TODO use executeTransactionAsync to have an onSuccess, onError
         realm.executeTransaction(new Realm.Transaction() {
+
             @Override
             public void execute(Realm realm) {
-
                 if (id == 0) {
                     // Add new pet
                     Pet newPet = realm.createObject(Pet.class, new Date().getTime()); // Primary key
@@ -108,6 +101,8 @@ public class PetsRepositoryDatabase implements PetsRepository {
 
             }
         });
+
+        return true;
     }
 
     @Override
@@ -121,6 +116,20 @@ public class PetsRepositoryDatabase implements PetsRepository {
                 allPets.deleteAllFromRealm();
             }
         });
+    }
+
+    @Override
+    public boolean deleteOnePet(final long id) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                // Delete one pet with id
+                Pet existentPet = realm.where(Pet.class)
+                        .equalTo(PET_ID, id).findFirst();
+
+            }
+        });
+        return true;
     }
 
 

@@ -116,13 +116,19 @@ public class PetsPresenterTest {
         }
 
         @Override
-        public void addOrUpdatePet(@Nullable long id, String name, String breed, String gender, String weight) {
+        public boolean addOrUpdatePet(@Nullable long id, String name, String breed, String gender, String weight) {
 
+            return false;
         }
 
         @Override
         public void deleteAll() {
 
+        }
+
+        @Override
+        public boolean deleteOnePet(long id) {
+            return false;
         }
     }
 
