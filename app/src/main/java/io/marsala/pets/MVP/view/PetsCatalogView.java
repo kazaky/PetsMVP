@@ -9,7 +9,7 @@ import java.util.List;
  * HIT ME @TenFeetShuffler
  */
 
-public interface PetsView {
+public interface PetsCatalogView {
 
     /**
      * method called by the presenter on the view

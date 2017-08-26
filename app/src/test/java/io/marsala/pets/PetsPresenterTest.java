@@ -1,8 +1,10 @@
 package io.marsala.pets;
 
+import android.support.annotation.Nullable;
+
 import io.marsala.pets.MVP.model.repositories.PetsRepository;
 import io.marsala.pets.MVP.presnter.PetsPresenter;
-import io.marsala.pets.MVP.view.PetsView;
+import io.marsala.pets.MVP.view.PetsCatalogView;
 import io.marsala.pets.MVP.model.models.Pet;
 
 import org.junit.Assert;
@@ -32,7 +34,7 @@ public class PetsPresenterTest {
          * Initial conditions,
          * Create instances
          */
-        PetsView fakePetsView = new FakePetsView();
+        PetsCatalogView fakePetsView = new FakePetsView();
         PetsRepository fakePetsRepository = new FakePetsRepository(true);
 
         /**
@@ -56,7 +58,7 @@ public class PetsPresenterTest {
     @Test
     public void shouldHandleNoPetsFound() {
         // GIVEN
-        PetsView fakePetsView = new FakePetsView();
+        PetsCatalogView fakePetsView = new FakePetsView();
         PetsRepository fakePetsRepository = new FakePetsRepository(false);
 
         // WHEN
@@ -68,7 +70,7 @@ public class PetsPresenterTest {
     }
 
 
-    private class FakePetsView implements PetsView {
+    private class FakePetsView implements PetsCatalogView {
         // No need to initialize primitives
         // Default for boolean primitive is true
         boolean displayPetsWithPetsLoaded;
@@ -95,7 +97,7 @@ public class PetsPresenterTest {
         }
 
         @Override
-        public List<Pet> getPets() {
+        public List<Pet> getPets(String searchKeyword, long id) {
 
             /**
              * We want to control this mock to do different things at different times
@@ -110,6 +112,16 @@ public class PetsPresenterTest {
             else {
                 return Collections.emptyList(); // Empty array list
             }
+
+        }
+
+        @Override
+        public void addOrUpdatePet(@Nullable long id, String name, String breed, String gender, String weight) {
+
+        }
+
+        @Override
+        public void deleteAll() {
 
         }
     }

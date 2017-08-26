@@ -38,12 +38,16 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.List;
+
 import io.marsala.pets.MVP.model.legacy_database.PetContract.PetEntry;
+import io.marsala.pets.MVP.model.models.Pet;
+import io.marsala.pets.MVP.view.PetsEditorView;
 
 /**
  * Allows user to create a new pet or edit an existing one.
  */
-public class EditorActivity extends AppCompatActivity implements
+public class EditorActivity extends AppCompatActivity implements PetsEditorView,
         LoaderManager.LoaderCallbacks<Cursor> {
 
     /** Identifier for the pet data loader */
@@ -489,5 +493,10 @@ public class EditorActivity extends AppCompatActivity implements
 
         // Close the activity
         finish();
+    }
+
+    @Override
+    public void displayExistentPet(List<Pet> petsList) {
+
     }
 }

@@ -1,10 +1,10 @@
 package io.marsala.pets.MVP.presnter;
 
-import io.marsala.pets.MVP.model.repositories.PetsRepository;
-import io.marsala.pets.MVP.view.PetsView;
-import io.marsala.pets.MVP.model.models.Pet;
-
 import java.util.List;
+
+import io.marsala.pets.MVP.model.models.Pet;
+import io.marsala.pets.MVP.model.repositories.PetsRepository;
+import io.marsala.pets.MVP.view.PetsCatalogView;
 
 /**
  * Created by AHMED HAMDI ELSHAHAWI on 7/23/2017.
@@ -12,10 +12,10 @@ import java.util.List;
  */
 
 public class PetsPresenter {
-    private PetsView petsView;
+    private PetsCatalogView petsView;
     private PetsRepository petsRepository;
 
-    public PetsPresenter(PetsView petsView, PetsRepository petsRepository) {
+    public PetsPresenter(PetsCatalogView petsView, PetsRepository petsRepository) {
         this.petsView = petsView;
         this.petsRepository = petsRepository;
     }
@@ -25,7 +25,7 @@ public class PetsPresenter {
      */
     public void loadPets() {
         // Load pets from database
-        List<Pet> petsList = petsRepository.getPets();
+        List<Pet> petsList = petsRepository.getPets(null, -1);
 
         // Display pets into view
         if (petsList.size() > 0) {
@@ -33,11 +33,14 @@ public class PetsPresenter {
         }
 
         // Display no pets into view
-        else if (petsList.isEmpty()){
+        else if (petsList.isEmpty()) {
             petsView.displayNoPets();
         }
 
 
     }
 
+    public void deleteAllPets() {
+        petsRepository.deleteAll();
+    }
 }
