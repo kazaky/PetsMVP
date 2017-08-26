@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.pets.database.legacy_database;
+package io.marsala.pets.MVP.model.legacy_database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

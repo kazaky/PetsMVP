@@ -1,6 +1,6 @@
-package com.example.android.pets.MVP.view;
+package io.marsala.pets.MVP.view;
 
-import com.example.android.pets.database.Pet;
+import io.marsala.pets.MVP.model.models.Pet;
 
 import java.util.List;
 

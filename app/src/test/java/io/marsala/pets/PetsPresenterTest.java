@@ -1,9 +1,9 @@
-package com.example.android.pets;
+package io.marsala.pets;
 
-import com.example.android.pets.MVP.model.repositories.PetsRepository;
-import com.example.android.pets.MVP.presnter.PetsPresenter;
-import com.example.android.pets.MVP.view.PetsView;
-import com.example.android.pets.database.Pet;
+import io.marsala.pets.MVP.model.repositories.PetsRepository;
+import io.marsala.pets.MVP.presnter.PetsPresenter;
+import io.marsala.pets.MVP.view.PetsView;
+import io.marsala.pets.MVP.model.models.Pet;
 
 import org.junit.Assert;
 import org.junit.Test;

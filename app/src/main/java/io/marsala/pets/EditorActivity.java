@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.pets;
+package io.marsala.pets;
 
 import android.app.AlertDialog;
 import android.app.LoaderManager;
@@ -38,7 +38,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.android.pets.database.legacy_database.PetContract.PetEntry;
+import io.marsala.pets.MVP.model.legacy_database.PetContract.PetEntry;
 
 /**
  * Allows user to create a new pet or edit an existing one.

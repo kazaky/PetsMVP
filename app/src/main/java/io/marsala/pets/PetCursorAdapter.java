@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.pets;
+package io.marsala.pets;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -24,7 +24,7 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
-import com.example.android.pets.database.legacy_database.PetContract.PetEntry;
+import io.marsala.pets.MVP.model.legacy_database.PetContract.PetEntry;
 
 /**
  * {@link PetCursorAdapter} is an adapter for a list or grid view

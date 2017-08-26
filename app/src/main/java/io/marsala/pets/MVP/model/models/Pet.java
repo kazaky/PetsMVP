@@ -1,12 +1,16 @@
-package com.example.android.pets.database;
+package io.marsala.pets.MVP.model.models;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by AHMED HAMDI ELSHAHAWI on 7/23/2017.
  * HIT ME @TenFeetShuffler
  */
 
-public class Pet {
+public class Pet extends RealmObject {
 
+    @PrimaryKey
     private long id;
     private String name;
     private String breed;

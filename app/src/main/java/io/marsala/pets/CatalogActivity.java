@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.pets;
+package io.marsala.pets;
 
 import android.app.LoaderManager;
 import android.content.ContentUris;
@@ -33,10 +33,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.android.pets.MVP.presnter.PetsPresenter;
-import com.example.android.pets.MVP.view.PetsView;
-import com.example.android.pets.database.Pet;
-import com.example.android.pets.database.legacy_database.PetContract.PetEntry;
+import io.marsala.pets.MVP.presnter.PetsPresenter;
+import io.marsala.pets.MVP.view.PetsView;
+import io.marsala.pets.MVP.model.models.Pet;
+import io.marsala.pets.MVP.model.legacy_database.PetContract.PetEntry;
 
 import java.util.List;
 
@@ -97,7 +97,7 @@ public class CatalogActivity extends AppCompatActivity
                 // Form the content URI that represents the specific pet that was clicked on,
                 // by appending the "id" (passed as input to this method) onto the
                 // {@link PetEntry#CONTENT_URI}.
-                // For example, the URI would be "content://com.example.android.pets/pets/2"
+                // For example, the URI would be "content://io.android.pets/pets/2"
                 // if the pet with ID 2 was clicked on.
                 Uri currentPetUri = ContentUris.withAppendedId(PetEntry.CONTENT_URI, id);
 
