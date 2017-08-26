@@ -1,4 +1,4 @@
-package io.marsala.pets.MVP.model.database;
+package io.marsala.pets.model.database;
 
 import android.support.annotation.Nullable;
 
@@ -7,13 +7,13 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import io.marsala.pets.MVP.model.models.Pet;
-import io.marsala.pets.MVP.model.repositories.PetsRepository;
+import io.marsala.pets.model.models.Pet;
+import io.marsala.pets.model.repositories.PetsRepository;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-import static io.marsala.pets.MVP.model.models.Constants.PET_ID;
-import static io.marsala.pets.MVP.model.models.Constants.PET_NAME;
+import static io.marsala.pets.model.models.Constants.PET_ID;
+import static io.marsala.pets.model.models.Constants.PET_NAME;
 
 /**
  * Created by AHMED HAMDI ELSHAHAWI on 8/26/2017.
@@ -126,6 +126,8 @@ public class PetsRepositoryDatabase implements PetsRepository {
                 // Delete one pet with id
                 Pet existentPet = realm.where(Pet.class)
                         .equalTo(PET_ID, id).findFirst();
+
+                existentPet.deleteFromRealm();
 
             }
         });

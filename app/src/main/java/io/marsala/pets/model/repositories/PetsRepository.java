@@ -1,10 +1,10 @@
-package io.marsala.pets.MVP.model.repositories;
+package io.marsala.pets.model.repositories;
 
 import android.support.annotation.Nullable;
 
 import java.util.List;
 
-import io.marsala.pets.MVP.model.models.Pet;
+import io.marsala.pets.model.models.Pet;
 
 /**
  * Created by AHMED HAMDI ELSHAHAWI on 7/23/2017.

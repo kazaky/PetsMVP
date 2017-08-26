@@ -1,6 +1,6 @@
-package io.marsala.pets.MVP.view;
+package io.marsala.pets.view;
 
-import io.marsala.pets.MVP.model.models.Pet;
+import io.marsala.pets.model.models.Pet;
 
 import java.util.List;
 

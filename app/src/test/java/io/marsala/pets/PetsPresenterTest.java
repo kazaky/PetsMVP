@@ -2,10 +2,10 @@ package io.marsala.pets;
 
 import android.support.annotation.Nullable;
 
-import io.marsala.pets.MVP.model.repositories.PetsRepository;
-import io.marsala.pets.MVP.presnter.PetsPresenter;
-import io.marsala.pets.MVP.view.PetsCatalogView;
-import io.marsala.pets.MVP.model.models.Pet;
+import io.marsala.pets.model.repositories.PetsRepository;
+import io.marsala.pets.presnter.PetsPresenter;
+import io.marsala.pets.view.PetsCatalogView;
+import io.marsala.pets.model.models.Pet;
 
 import org.junit.Assert;
 import org.junit.Test;

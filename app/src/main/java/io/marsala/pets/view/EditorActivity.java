@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.marsala.pets;
+package io.marsala.pets.view;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -31,16 +31,16 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import io.marsala.pets.MVP.model.database.PetsRepositoryDatabase;
-import io.marsala.pets.MVP.model.models.Pet;
-import io.marsala.pets.MVP.presnter.PetsPresenter;
-import io.marsala.pets.MVP.view.PetsEditorView;
+import io.marsala.pets.R;
+import io.marsala.pets.model.database.PetsRepositoryDatabase;
+import io.marsala.pets.model.models.Pet;
+import io.marsala.pets.presnter.PetsPresenter;
 import io.realm.Realm;
 
-import static io.marsala.pets.MVP.model.models.Constants.GENDER_FEMALE;
-import static io.marsala.pets.MVP.model.models.Constants.GENDER_MALE;
-import static io.marsala.pets.MVP.model.models.Constants.GENDER_UNKNOWN;
-import static io.marsala.pets.MVP.model.models.Constants.PET_ID;
+import static io.marsala.pets.model.models.Constants.GENDER_FEMALE;
+import static io.marsala.pets.model.models.Constants.GENDER_MALE;
+import static io.marsala.pets.model.models.Constants.GENDER_UNKNOWN;
+import static io.marsala.pets.model.models.Constants.PET_ID;
 
 /**
  * Allows user to create a new pet or edit an existing one.

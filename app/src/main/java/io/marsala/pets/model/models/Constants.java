@@ -1,4 +1,4 @@
-package io.marsala.pets.MVP.model.models;
+package io.marsala.pets.model.models;
 
 /**
  * Created by AHMED HAMDI ELSHAHAWI on 8/26/2017.

@@ -1,4 +1,4 @@
-package io.marsala.pets.MVP.model.models;
+package io.marsala.pets.model.models;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;

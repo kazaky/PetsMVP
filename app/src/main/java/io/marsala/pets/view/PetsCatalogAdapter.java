@@ -1,4 +1,4 @@
-package io.marsala.pets.MVP.view;
+package io.marsala.pets.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,11 +12,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import io.marsala.pets.EditorActivity;
-import io.marsala.pets.MVP.model.models.Pet;
+import io.marsala.pets.model.models.Pet;
 import io.marsala.pets.R;
 
-import static io.marsala.pets.MVP.model.models.Constants.PET_ID;
+import static io.marsala.pets.model.models.Constants.PET_ID;
 
 /**
  * Created by AHMED HAMDI ELSHAHAWI on 6/25/2017.

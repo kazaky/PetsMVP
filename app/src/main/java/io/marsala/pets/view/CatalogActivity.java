@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.marsala.pets;
+package io.marsala.pets.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,11 +26,10 @@ import android.view.View;
 
 import java.util.List;
 
-import io.marsala.pets.MVP.model.database.PetsRepositoryDatabase;
-import io.marsala.pets.MVP.model.models.Pet;
-import io.marsala.pets.MVP.presnter.PetsPresenter;
-import io.marsala.pets.MVP.view.PetsCatalogAdapter;
-import io.marsala.pets.MVP.view.PetsCatalogView;
+import io.marsala.pets.model.database.PetsRepositoryDatabase;
+import io.marsala.pets.model.models.Pet;
+import io.marsala.pets.presnter.PetsPresenter;
+import io.marsala.pets.R;
 import io.realm.Realm;
 
 /**
@@ -96,6 +95,7 @@ public class CatalogActivity extends AppCompatActivity
             // Respond to a click on the "Delete all entries" menu option
             case R.id.action_delete_all_entries:
                 presenter.deleteAllPets();
+                presenter.loadPets();
                 return true;
         }
         return super.onOptionsItemSelected(item);
