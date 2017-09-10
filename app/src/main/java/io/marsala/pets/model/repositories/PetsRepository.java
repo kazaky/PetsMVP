@@ -13,6 +13,11 @@ import io.marsala.pets.model.models.Pet;
 
 public interface PetsRepository {
 
+    /**
+     * @param searchKeyword set to null if you want all the pets
+     * @param id            set to -1 if you want all the pets
+     * @return a list of all pets OR list of specific pets OR list of one pet
+     */
     List<Pet> getPets(String searchKeyword, long id);
 
     boolean addOrUpdatePet(@Nullable long id,

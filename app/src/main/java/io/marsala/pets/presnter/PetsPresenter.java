@@ -30,7 +30,7 @@ public class PetsPresenter {
     }
 
     /**
-     * Loads pets from database repository  to view
+     * Loads pets from database repository to view
      */
     public void loadPets() {
         // Load pets from database
