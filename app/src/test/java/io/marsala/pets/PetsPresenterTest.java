@@ -3,13 +3,12 @@ package io.marsala.pets;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.MockitoRule;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import io.marsala.pets.model.models.Pet;
@@ -18,7 +17,6 @@ import io.marsala.pets.presnter.PetsPresenter;
 import io.marsala.pets.view.PetsCatalogView;
 import io.marsala.pets.view.PetsEditorView;
 
-import static java.util.Collections.EMPTY_LIST;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -63,7 +61,7 @@ public class PetsPresenterTest {
 
     @Test
     public void shouldHandleNoPetsFound() {
-        when(petsRepository.getPets(null, -1)).thenReturn(EMPTY_LIST);
+        when(petsRepository.getPets(null, -1)).thenReturn(Collections.<Pet>emptyList());
 
         petsPresenter.loadPets();
 
