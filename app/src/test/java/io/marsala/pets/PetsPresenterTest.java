@@ -39,7 +39,7 @@ public class PetsPresenterTest {
 
     private final List<Pet> MANY_PETS = Arrays.asList(new Pet(), new Pet(), new Pet());
 
-    PetsPresenter petsPresenter;
+    private PetsPresenter petsPresenter;
 
     @Before
     public void setUp() {
