@@ -56,48 +56,48 @@ public class PetsRepositoryDatabase implements PetsRepository {
                     .equalTo(PET_ID, id).findFirst();
             results = Arrays.asList(existentPet);
         }
-
-
         return results;
     }
 
 
-    /**
-     * @param id     set to 0 if you it's a new pet!
-     * @param name
-     * @param breed
-     * @param gender
-     * @param weight
-     */
     @Override
-    public boolean addOrUpdatePet(@Nullable final long id,
-                                  final String name,
-                                  final String breed,
-                                  final String gender,
-                                  final String weight) {
+    public boolean addNewPet(final String name,
+                             final String breed,
+                             final String gender,
+                             final String weight) {
         // TODO use executeTransactionAsync to have an onSuccess, onError
         realm.executeTransaction(new Realm.Transaction() {
 
             @Override
             public void execute(Realm realm) {
-                if (id == 0) {
-                    // Add new pet
-                    Pet newPet = realm.createObject(Pet.class, new Date().getTime()); // Primary key
-                    newPet.setName(name);
-                    newPet.setBreed(breed);
-                    newPet.setGender(gender);
-                    newPet.setWeight(weight);
-                }
+                Pet newPet = realm.createObject(Pet.class, new Date().getTime()); // Primary key
+                newPet.setName(name);
+                newPet.setBreed(breed);
+                newPet.setGender(gender);
+                newPet.setWeight(weight);
+            }
+        });
 
-                // Update existent pets
-                else {
-                    Pet existentPet = realm.where(Pet.class)
-                            .equalTo(PET_ID, id).findFirst();
-                    existentPet.setName(name);
-                    existentPet.setBreed(breed);
-                    existentPet.setGender(gender);
-                    existentPet.setWeight(weight);
-                }
+        return true;
+    }
+
+    @Override
+    public boolean updateExistentPet(@Nullable final long id,
+                                     final String name,
+                                     final String breed,
+                                     final String gender,
+                                     final String weight) {
+        realm.executeTransaction(new Realm.Transaction() {
+
+            @Override
+            public void execute(Realm realm) {
+                Pet existentPet = realm.where(Pet.class)
+                        .equalTo(PET_ID, id).findFirst();
+                existentPet.setName(name);
+                existentPet.setBreed(breed);
+                existentPet.setGender(gender);
+                existentPet.setWeight(weight);
+
 
             }
         });
@@ -110,7 +110,6 @@ public class PetsRepositoryDatabase implements PetsRepository {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-
                 // Delete all pets
                 RealmResults<Pet> allPets = realm.where(Pet.class).findAll();
                 allPets.deleteAllFromRealm();
@@ -133,6 +132,5 @@ public class PetsRepositoryDatabase implements PetsRepository {
         });
         return true;
     }
-
 
 }

@@ -23,12 +23,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.List;
 
 import io.marsala.pets.model.database.PetsRepositoryDatabase;
 import io.marsala.pets.model.models.Pet;
-import io.marsala.pets.presnter.PetsPresenter;
+import io.marsala.pets.presnter.PetsCatalogPresenter;
 import io.marsala.pets.R;
 import io.realm.Realm;
 
@@ -43,7 +44,7 @@ public class CatalogActivity extends AppCompatActivity
      * Adapter for the ListView
      */
     PetsCatalogAdapter catalogAdapter;
-    private PetsPresenter presenter;
+    private PetsCatalogPresenter presenter;
     private Realm realm;
     View emptyView;
     private RecyclerView petListView;
@@ -55,7 +56,7 @@ public class CatalogActivity extends AppCompatActivity
 
         realm = Realm.getDefaultInstance();
 
-        presenter = new PetsPresenter(this, new PetsRepositoryDatabase(realm));
+        presenter = new PetsCatalogPresenter(this, new PetsRepositoryDatabase(realm));
 
         // Setup FAB to open EditorActivity
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -116,6 +117,11 @@ public class CatalogActivity extends AppCompatActivity
         // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
         petListView.setVisibility(View.GONE);
         emptyView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void displayError(Exception e) {
+        Toast.makeText(this, "Error accessing data "+e, Toast.LENGTH_LONG).show();
     }
 
 

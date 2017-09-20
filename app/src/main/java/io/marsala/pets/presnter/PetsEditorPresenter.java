@@ -6,7 +6,6 @@ import java.util.List;
 
 import io.marsala.pets.model.models.Pet;
 import io.marsala.pets.model.repositories.PetsRepository;
-import io.marsala.pets.view.PetsCatalogView;
 import io.marsala.pets.view.PetsEditorView;
 
 /**
@@ -14,58 +13,28 @@ import io.marsala.pets.view.PetsEditorView;
  * HIT ME @TenFeetShuffler
  */
 
-public class PetsPresenter {
+public class PetsEditorPresenter {
     private PetsEditorView petsEditorView;
-    private PetsCatalogView petsCatalogView;
     private PetsRepository petsRepository;
 
-    public PetsPresenter(PetsCatalogView petsCatalogView, PetsRepository petsRepository) {
-        this.petsCatalogView = petsCatalogView;
-        this.petsRepository = petsRepository;
-    }
 
-    public PetsPresenter(PetsEditorView petsEditorView, PetsRepository petsRepository) {
+    public PetsEditorPresenter(PetsEditorView petsEditorView, PetsRepository petsRepository) {
         this.petsEditorView = petsEditorView;
         this.petsRepository = petsRepository;
     }
 
-    /**
-     * Loads pets from database repository to view
-     */
-    public void loadPets() {
-        // Load pets from database
-        List<Pet> petsList = petsRepository.getPets(null, -1);
 
-        // Display no pets into view
-        if (petsList.isEmpty()) {
-            petsCatalogView.displayNoPets();
-        }
-
-        // Display pets into view
-        else {
-            petsCatalogView.displayPets(petsList);
-        }
-
-
+    public void startNewPet() {
+        petsEditorView.displayEmptyFields();
     }
 
-    public void deleteAllPets() {
-        petsRepository.deleteAll();
-    }
-
-    public void startNewOrEdit(long idCurrentPet) {
-
-        // Start a new pet
-        if (idCurrentPet == 0) {
-            petsEditorView.displayEmptyFields();
-        }
-
-        // Edit an existent pet
-        else {
+    public void editExistentPet(long idCurrentPet) {
+        try {
             List<Pet> onePetList = petsRepository.getPets(null, idCurrentPet);
             petsEditorView.displayExistentPet(onePetList.get(0));
+        } catch (Exception e) {
+            petsEditorView.displayStorageError();
         }
-
     }
 
     public boolean savePetEditor(long id, String name, String breed, String gender, String weight) {
@@ -90,15 +59,44 @@ public class PetsPresenter {
             throw new IllegalArgumentException("Pet requires valid weight");
         }
 
+        if (inputsAreValid) {
+            if (id == 0)
+                isPetSaved = petsRepository.addNewPet(name, breed, gender, weight);
 
-        if (inputsAreValid)
-            isPetSaved = petsRepository.addOrUpdatePet(id, name, breed, gender, weight);
+            else
+                isPetSaved = petsRepository.updateExistentPet(id, name, breed, gender, weight);
 
+        }
         return isPetSaved;
     }
 
-    public boolean deleteOne(long id) {
+    public void deleteCurrentPet(long id) {
+
+        // Perform the deletion of the pet in the database.
         boolean result = petsRepository.deleteOnePet(id);
-        return result;
+
+        if (result) {
+            petsEditorView.displayPetDeleted();
+
+            // Otherwise, the delete was successful and we can display a toast.
+        } else petsEditorView.displayDeletionError();
+
+
+    }
+
+
+    public void startNewOrEdit(long idCurrentPet) {
+
+        // Start a new pet
+        if (idCurrentPet == 0)
+            startNewPet();
+
+            // Edit an existent pet
+        else editExistentPet(idCurrentPet);
+    }
+
+    public void promptDeletion() {
+        petsEditorView.displayDeletePrompt();
     }
 }
+

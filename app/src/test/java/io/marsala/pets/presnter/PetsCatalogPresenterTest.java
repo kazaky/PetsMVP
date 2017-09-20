@@ -1,4 +1,4 @@
-package io.marsala.pets;
+package io.marsala.pets.presnter;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -6,17 +6,13 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
 import io.marsala.pets.model.models.Pet;
 import io.marsala.pets.model.repositories.PetsRepository;
-import io.marsala.pets.presnter.PetsPresenter;
+import io.marsala.pets.presnter.PetsCatalogPresenter;
 import io.marsala.pets.view.PetsCatalogView;
-import io.marsala.pets.view.PetsEditorView;
-
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -25,25 +21,22 @@ import static org.mockito.Mockito.when;
  * HIT ME @TenFeetShuffler
  */
 
-public class PetsPresenterTest {
+public class PetsCatalogPresenterTest {
 
     @Rule
-    MockitoRule mockitoRule = MockitoJUnit.rule();
-
+    public MockitoRule mockitoRule = MockitoJUnit.rule();
     @Mock
     PetsCatalogView catalogView;
-    @Mock
-    PetsEditorView editorView;
     @Mock
     PetsRepository petsRepository;
 
     private final List<Pet> MANY_PETS = Arrays.asList(new Pet(), new Pet(), new Pet());
 
-    private PetsPresenter petsPresenter;
+    private PetsCatalogPresenter petsPresenter;
 
     @Before
     public void setUp() {
-        petsPresenter = new PetsPresenter(catalogView, petsRepository);
+        petsPresenter = new PetsCatalogPresenter(catalogView, petsRepository);
     }
 
     @Test
@@ -67,5 +60,7 @@ public class PetsPresenterTest {
 
         verify(catalogView).displayNoPets();
     }
+
+
 
 }

@@ -25,11 +25,17 @@ repositories {
     }
 }
 
+def BUTTER_KNIFE_VERSION="8.8.1"
+
 dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
+    compile "com.jakewharton:butterknife:$BUTTER_KNIFE_VERSION"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$BUTTER_KNIFE_VERSION"
+
     debugCompile 'com.facebook.stetho:stetho:1.5.0'
     debugCompile 'com.uphyca:stetho_realm:2.1.0'
+
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.10.0'
 }

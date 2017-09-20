@@ -20,12 +20,17 @@ public interface PetsRepository {
      */
     List<Pet> getPets(String searchKeyword, long id);
 
-    boolean addOrUpdatePet(@Nullable long id,
-                           String name,
-                           String breed,
-                           String gender,
-                           String weight
-    );
+
+    boolean addNewPet(String name,
+                      String breed,
+                      String gender,
+                      String weight);
+
+    boolean updateExistentPet(@Nullable long id,
+                              String name,
+                              String breed,
+                              String gender,
+                              String weight);
 
     void deleteAll();
 

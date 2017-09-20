@@ -20,4 +20,5 @@ public interface PetsCatalogView {
 
     void displayNoPets();
 
+    void displayError(Exception e);
 }

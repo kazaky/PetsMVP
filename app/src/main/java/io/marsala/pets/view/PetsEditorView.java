@@ -17,4 +17,12 @@ public interface PetsEditorView {
      */
     void displayExistentPet(Pet petsList);
 
+
+    void displayStorageError();
+
+    void displayDeletePrompt();
+
+    void displayPetDeleted();
+
+    void displayDeletionError();
 }

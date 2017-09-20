@@ -34,7 +34,7 @@ import android.widget.Toast;
 import io.marsala.pets.R;
 import io.marsala.pets.model.database.PetsRepositoryDatabase;
 import io.marsala.pets.model.models.Pet;
-import io.marsala.pets.presnter.PetsPresenter;
+import io.marsala.pets.presnter.PetsEditorPresenter;
 import io.realm.Realm;
 
 import static io.marsala.pets.model.models.Constants.GENDER_FEMALE;
@@ -84,7 +84,7 @@ public class EditorActivity extends AppCompatActivity implements PetsEditorView 
             return false;
         }
     };
-    private PetsPresenter presenter;
+    private PetsEditorPresenter presenter;
     private Realm realm;
     private String mGender = GENDER_UNKNOWN;
     long idCurrentPet = 0;
@@ -96,7 +96,7 @@ public class EditorActivity extends AppCompatActivity implements PetsEditorView 
         setContentView(R.layout.activity_editor);
 
         realm = Realm.getDefaultInstance();
-        presenter = new PetsPresenter(this, new PetsRepositoryDatabase(realm));
+        presenter = new PetsEditorPresenter(this, new PetsRepositoryDatabase(realm));
 
         // Examine the intent that was used to launch this activity,
         // in order to figure out if we're creating a new pet or editing an existing one.
@@ -241,7 +241,7 @@ public class EditorActivity extends AppCompatActivity implements PetsEditorView 
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:
                 // Pop up confirmation dialog for deletion
-                showDeleteConfirmationDialog();
+                presenter.promptDeletion();
                 break;
             // Respond to a click on the "Up" arrow button in the app bar
             case android.R.id.home:
@@ -318,7 +318,7 @@ public class EditorActivity extends AppCompatActivity implements PetsEditorView 
         builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked the "Delete" button, so delete the pet.
-                deletePet();
+                presenter.deleteCurrentPet(idCurrentPet);
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -336,29 +336,6 @@ public class EditorActivity extends AppCompatActivity implements PetsEditorView 
         alertDialog.show();
     }
 
-    /**
-     * Perform the deletion of the pet in the database.
-     */
-    private void deletePet() {
-        // Only perform the delete if this is an existing pet.
-        if (idCurrentPet != 0) {
-            boolean deleted = presenter.deleteOne(idCurrentPet);
-
-            // Show a toast message depending on whether or not the delete was successful.
-            if (deleted == false) {
-                // If no rows were deleted, then there was an error with the delete.
-                Toast.makeText(this, getString(R.string.editor_delete_pet_failed),
-                        Toast.LENGTH_SHORT).show();
-            } else {
-                // Otherwise, the delete was successful and we can display a toast.
-                Toast.makeText(this, getString(R.string.editor_delete_pet_successful),
-                        Toast.LENGTH_SHORT).show();
-            }
-        }
-
-        // Close the activity
-        finish();
-    }
 
     @Override
     public void displayExistentPet(Pet pet) {
@@ -391,6 +368,31 @@ public class EditorActivity extends AppCompatActivity implements PetsEditorView 
                 mGenderSpinner.setSelection(0);
                 break;
         }
+    }
+
+    @Override
+    public void displayStorageError() {
+        Toast.makeText(this, "Error editing this pet in database", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void displayDeletePrompt() {
+        showDeleteConfirmationDialog();
+
+
+    }  @Override
+    public void displayPetDeleted() {
+        Toast.makeText(this, getString(R.string.editor_delete_pet_successful), Toast.LENGTH_SHORT).show();
+
+        // Close the activity
+        finish();
+    }
+
+    @Override
+    public void displayDeletionError() {
+        // If no rows were deleted, then there was an error with the delete.
+        Toast.makeText(this, getString(R.string.editor_delete_pet_failed),
+                Toast.LENGTH_SHORT).show();
     }
 
     @Override
