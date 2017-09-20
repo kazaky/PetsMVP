@@ -31,6 +31,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnTouch;
 import io.marsala.pets.R;
 import io.marsala.pets.model.database.PetsRepositoryDatabase;
 import io.marsala.pets.model.models.Pet;
@@ -47,26 +50,10 @@ import static io.marsala.pets.model.models.Constants.PET_ID;
  */
 public class EditorActivity extends AppCompatActivity implements PetsEditorView {
 
-    /**
-     * EditText field to enter the pet's name
-     */
-    private EditText mNameEditText;
-
-    /**
-     * EditText field to enter the pet's breed
-     */
-    private EditText mBreedEditText;
-
-    /**
-     * EditText field to enter the pet's weight
-     */
-    private EditText mWeightEditText;
-
-    /**
-     * EditText field to enter the pet's gender
-     */
-    private Spinner mGenderSpinner;
-
+   @BindView(R.id.edit_pet_name)EditText mNameEditText;
+   @BindView(R.id.edit_pet_breed)EditText mBreedEditText;
+   @BindView(R.id.edit_pet_weight)EditText mWeightEditText;
+   @BindView(R.id.spinner_gender)Spinner mGenderSpinner;
 
     /**
      * Boolean flag that keeps track of whether the pet has been edited (true) or not (false)
@@ -77,13 +64,15 @@ public class EditorActivity extends AppCompatActivity implements PetsEditorView 
      * OnTouchListener that listens for any user touches on a View, implying that they are modifying
      * the view, and we change the mPetHasChanged boolean to true.
      */
-    private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            mPetHasChanged = true;
-            return false;
-        }
-    };
+    // Setup OnTouchListeners on all the input fields, so we can determine if the user
+    // has touched or modified them. This will let us know if there are unsaved changes
+    // or not, if the user tries to leave the editor without saving.
+    @OnTouch({ R.id.edit_pet_name, R.id.edit_pet_breed, R.id.edit_pet_weight,R.id.spinner_gender })
+    public boolean changeEditState(){
+        mPetHasChanged = true;
+        return false;
+    }
+
     private PetsEditorPresenter presenter;
     private Realm realm;
     private String mGender = GENDER_UNKNOWN;
@@ -94,6 +83,7 @@ public class EditorActivity extends AppCompatActivity implements PetsEditorView 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
+        ButterKnife.bind(this);
 
         realm = Realm.getDefaultInstance();
         presenter = new PetsEditorPresenter(this, new PetsRepositoryDatabase(realm));
@@ -102,22 +92,6 @@ public class EditorActivity extends AppCompatActivity implements PetsEditorView 
         // in order to figure out if we're creating a new pet or editing an existing one.
         Intent intent = getIntent();
         idCurrentPet = intent.getLongExtra(PET_ID, 0);
-
-
-        // Find all relevant views that we will need to read user input from
-        mNameEditText = (EditText) findViewById(R.id.edit_pet_name);
-        mBreedEditText = (EditText) findViewById(R.id.edit_pet_breed);
-        mWeightEditText = (EditText) findViewById(R.id.edit_pet_weight);
-        mGenderSpinner = (Spinner) findViewById(R.id.spinner_gender);
-
-
-        // Setup OnTouchListeners on all the input fields, so we can determine if the user
-        // has touched or modified them. This will let us know if there are unsaved changes
-        // or not, if the user tries to leave the editor without saving.
-        mNameEditText.setOnTouchListener(mTouchListener);
-        mBreedEditText.setOnTouchListener(mTouchListener);
-        mWeightEditText.setOnTouchListener(mTouchListener);
-        mGenderSpinner.setOnTouchListener(mTouchListener);
 
         setupSpinner();
 

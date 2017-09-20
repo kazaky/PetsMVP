@@ -12,8 +12,11 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import io.marsala.pets.model.models.Pet;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.marsala.pets.R;
+import io.marsala.pets.model.models.Pet;
 
 import static io.marsala.pets.model.models.Constants.PET_ID;
 
@@ -33,19 +36,19 @@ public class PetsCatalogAdapter extends RecyclerView.Adapter<PetsCatalogAdapter.
         this.petsList = petsList;
     }
 
-    public class PetViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class PetViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.name)
         TextView name;
+        @BindView(R.id.summary)
         TextView summary;
 
         public PetViewHolder(View v) {
             super(v);
-            name = (TextView) v.findViewById(R.id.name);
-            summary = (TextView) v.findViewById(R.id.summary);
-            v.setOnClickListener(this);
+            ButterKnife.bind(this, v);
         }
 
-        @Override
-        public void onClick(View v) {
+        @OnClick(R.id.wPet)
+        public void startEditor() {
             // Create new intent to go to {@link EditorActivity}
             Intent intent = new Intent(context, EditorActivity.class);
 
@@ -56,6 +59,7 @@ public class PetsCatalogAdapter extends RecyclerView.Adapter<PetsCatalogAdapter.
 
             // Launch the {@link EditorActivity} to display the data for the current pet.
             context.startActivity(intent);
+
 
         }
     }
