@@ -6,9 +6,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import io.marsala.pets.model.models.Pet;
 import io.marsala.pets.model.repositories.PetsRepository;
+import io.reactivex.Single;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -57,6 +59,16 @@ public class PetsRepositoryDatabase implements PetsRepository {
             results = Arrays.asList(existentPet);
         }
         return results;
+    }
+
+    @Override
+    public Single<List<Pet>> getPetsReactively(final String searchKeyword, final long id) {
+        return Single.fromCallable(new Callable<List<Pet>>() {
+            @Override
+            public List<Pet> call() throws Exception {
+                return getPets(searchKeyword, id);
+            }
+        });
     }
 
 

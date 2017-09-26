@@ -7,6 +7,7 @@ import java.util.List;
 import io.marsala.pets.model.models.Pet;
 import io.marsala.pets.model.repositories.PetsRepository;
 import io.marsala.pets.view.PetsEditorView;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by AHMED HAMDI ELSHAHAWI on 7/23/2017.
@@ -35,6 +36,24 @@ public class PetsEditorPresenter {
         } catch (Exception e) {
             petsEditorView.displayStorageError();
         }
+    }
+    public void editExistentPetReactively(long idCurrentPet) {
+            petsRepository.getPetsReactively(null, idCurrentPet)
+                    .subscribe(new Consumer<List<Pet>>() {
+                        @Override
+                        public void accept(List<Pet> onePetList) throws Exception {
+                            petsEditorView.displayExistentPet(onePetList.get(0));
+
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            petsEditorView.displayStorageError();
+                        }
+                    });
+
+
+
     }
 
     public boolean savePetEditor(long id, String name, String breed, String gender, String weight) {
@@ -92,7 +111,7 @@ public class PetsEditorPresenter {
             startNewPet();
 
             // Edit an existent pet
-        else editExistentPet(idCurrentPet);
+        else editExistentPetReactively(idCurrentPet);
     }
 
     public void promptDeletion() {

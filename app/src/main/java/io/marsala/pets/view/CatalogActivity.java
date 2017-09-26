@@ -76,7 +76,7 @@ public class CatalogActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.loadPets();
+        presenter.loadPetsReactively();
 
     }
 
@@ -95,7 +95,7 @@ public class CatalogActivity extends AppCompatActivity
             // Respond to a click on the "Delete all entries" menu option
             case R.id.action_delete_all_entries:
                 presenter.deleteAllPets();
-                presenter.loadPets();
+                presenter.loadPetsReactively();
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -1,13 +1,11 @@
 package io.marsala.pets.presnter;
 
-import android.text.TextUtils;
-
 import java.util.List;
 
 import io.marsala.pets.model.models.Pet;
 import io.marsala.pets.model.repositories.PetsRepository;
 import io.marsala.pets.view.PetsCatalogView;
-import io.marsala.pets.view.PetsEditorView;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by AHMED HAMDI ELSHAHAWI on 7/23/2017.
@@ -50,6 +48,30 @@ public class PetsCatalogPresenter {
 
             petsCatalogView.displayError(e);
         }
+
+    }
+    /**
+     * Loads pets from database repository to view
+     */
+    public void loadPetsReactively() {
+
+        petsRepository.getPetsReactively(null, -1)
+                .subscribe(new Consumer<List<Pet>>() {
+
+                    @Override
+                    public void accept(List<Pet> petsList) throws Exception {
+                        // Display no pets into view
+                        if (petsList.isEmpty()) {
+                            petsCatalogView.displayNoPets();
+                        }
+
+                        // Display pets into view
+                        else {
+                            petsCatalogView.displayPets(petsList);
+                        }
+
+                    }
+                });
 
     }
 

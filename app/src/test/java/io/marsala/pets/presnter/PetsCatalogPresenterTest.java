@@ -11,8 +11,10 @@ import java.util.Collections;
 import java.util.List;
 import io.marsala.pets.model.models.Pet;
 import io.marsala.pets.model.repositories.PetsRepository;
-import io.marsala.pets.presnter.PetsCatalogPresenter;
 import io.marsala.pets.view.PetsCatalogView;
+import io.reactivex.Single;
+
+import static java.util.Collections.EMPTY_LIST;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -51,12 +53,34 @@ public class PetsCatalogPresenterTest {
         verify(catalogView).displayPets(MANY_PETS);
     }
 
+    @Test
+    public void shouldPassPetsDatabaseToViewReactively() {
+        // GIVEN
+        when(petsRepository.getPetsReactively(null, -1)).thenReturn(Single.just(MANY_PETS));
+
+        // WHEN
+        petsPresenter.loadPetsReactively();
+
+        // THEN
+        verify(catalogView).displayPets(MANY_PETS);
+    }
+
 
     @Test
     public void shouldHandleNoPetsFound() {
-        when(petsRepository.getPets(null, -1)).thenReturn(Collections.<Pet>emptyList());
+        when(petsRepository.getPets(null, -1)).thenReturn(Collections.<Pet>emptyList()); // TypeSafe EmptyList
 
         petsPresenter.loadPets();
+
+        verify(catalogView).displayNoPets();
+    }
+
+
+    @Test
+    public void shouldHandleNoPetsFoundReactively() {
+        when(petsRepository.getPetsReactively(null, -1)).thenReturn(Single.<List<Pet>>just(EMPTY_LIST));
+
+        petsPresenter.loadPetsReactively();
 
         verify(catalogView).displayNoPets();
     }

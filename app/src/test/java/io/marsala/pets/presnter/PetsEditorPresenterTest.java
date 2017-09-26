@@ -13,6 +13,7 @@ import java.util.List;
 import io.marsala.pets.model.models.Pet;
 import io.marsala.pets.model.repositories.PetsRepository;
 import io.marsala.pets.view.PetsEditorView;
+import io.reactivex.Single;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -53,13 +54,22 @@ public class PetsEditorPresenterTest {
     }
 
     @Test
+    public void shouldHandleDatabaseErrorReactively() {
+        // Tell the mock to blow up, When there is an error
+        when(petsRepository.getPetsReactively(null, ANY_ID))
+                .thenReturn(Single.<List<Pet>>error(new RuntimeException("boom")));
+
+        editorPresenter.editExistentPetReactively(ANY_ID);
+
+        verify(editorView).displayStorageError();
+    }
+
+    @Test
     public void shouldCleanFieldsOnAddingNewPet() {
         editorPresenter.startNewPet();
 
         verify(editorView).displayEmptyFields();
     }
-
-
 
 
 }
